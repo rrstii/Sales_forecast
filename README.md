@@ -4,6 +4,7 @@ A practical time-series forecasting project that predicts daily store sales from
 
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![CI](https://github.com/rrstii/Sales_forecast/actions/workflows/ci.yml/badge.svg)](https://github.com/rrstii/Sales_forecast/actions/workflows/ci.yml)
 
 ## Project Overview
 
@@ -17,7 +18,7 @@ The project demonstrates a compact end-to-end forecasting workflow:
 6. Compare the model against a naive previous-day baseline.
 7. Evaluate and visualize the forecasts.
 
-> **Data note:** The current experiment uses synthetic data for reproducibility. The generator can be replaced with a CSV containing `date` and `sales` columns.
+> **Data note:** The current experiment uses synthetic data for reproducibility. The forecasting functions also accept a DataFrame containing `date` and `sales` columns.
 
 ## Features
 
@@ -31,15 +32,16 @@ The final 30 observations are reserved for evaluation, while earlier observation
 
 ## Results
 
-The included run reports approximately:
+With the default seed and settings, the included experiment reports:
 
 | Metric | Value |
 | --- | ---: |
-| Model MAE | ~7 |
-| Naive baseline MAE | ~13 |
-| Improvement vs. baseline | ~48% |
+| Model MAE | 6.93 |
+| Naive baseline MAE | 13.23 |
+| Model RMSE | 9.15 |
+| Improvement vs. baseline | 47.66% |
 
-The exact values can change if the data-generation process or random seed changes.
+These metrics describe the synthetic demonstration dataset and should not be interpreted as production forecasting performance.
 
 ## Visualization
 
@@ -55,21 +57,36 @@ cd Sales_forecast
 pip install -r requirements.txt
 ```
 
+For development and tests:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
 ## Usage
 
 ```bash
 python forecast.py
 ```
 
-The program prints MAE, RMSE, baseline performance, and relative improvement, then generates the forecast plot.
+Run the test suite with:
+
+```bash
+python -m pytest -q
+```
 
 ## Project Structure
 
 ```text
 Sales_forecast/
 ├── forecast.py
+├── tests/
+│   └── test_forecast.py
 ├── forecast_result.png
 ├── requirements.txt
+├── requirements-dev.txt
+├── .github/workflows/ci.yml
+├── .gitignore
 └── README.md
 ```
 
@@ -80,7 +97,7 @@ This repository is intentionally a lightweight forecasting example rather than a
 - Replace synthetic data with a real sales dataset.
 - Add holiday, promotion, and external-demand features.
 - Compare against stronger forecasting models.
-- Use time-series cross-validation.
+- Use rolling time-series cross-validation.
 - Add prediction intervals and uncertainty estimates.
 - Track experiments and model versions systematically.
 
